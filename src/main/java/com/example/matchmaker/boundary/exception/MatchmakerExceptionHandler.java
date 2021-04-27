@@ -1,6 +1,6 @@
-package com.example.matchmaker.exception;
+package com.example.matchmaker.boundary.exception;
 
-import com.example.matchmaker.boundary.api.MatchmakerController;
+import com.example.matchmaker.boundary.api.impl.MatchmakerController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

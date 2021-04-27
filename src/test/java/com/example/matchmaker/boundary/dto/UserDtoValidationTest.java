@@ -2,13 +2,17 @@ package com.example.matchmaker.boundary.dto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
 
 import static com.example.matchmaker.util.Constants.*;
+import static com.example.matchmaker.util.UserDtoFactory.createUserDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class UserDtoValidationTest {
 
     private Validator validator;
@@ -21,7 +25,7 @@ public class UserDtoValidationTest {
 
     @Test
     void givenValidUserDto_whenValidated_thenNoErrorsOccurred() {
-        userDto = UserDto.builder().name(USER_NAME).skill(SKILL).latency(LATENCY).build();
+        userDto = createUserDto();
 
         final var violations = validator.validate(userDto);
         assertThat(violations).isEmpty();

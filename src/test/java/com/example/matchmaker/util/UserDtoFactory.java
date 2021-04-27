@@ -12,11 +12,7 @@ import static com.example.matchmaker.util.Constants.*;
 public class UserDtoFactory {
 
     public static String createUserDtoString() throws JsonProcessingException {
-        return new ObjectMapper().writer().writeValueAsString(UserDto.builder()
-                .name(USER_NAME)
-                .skill(SKILL)
-                .latency(LATENCY)
-                .build());
+        return new ObjectMapper().writer().writeValueAsString(createUserDto());
     }
 
     public static String createInvalidUserDtoString() throws JsonProcessingException {
@@ -24,5 +20,9 @@ public class UserDtoFactory {
                 .skill(SKILL)
                 .latency(LATENCY)
                 .build());
+    }
+
+    public static UserDto createUserDto() {
+        return UserDto.builder().name(USER_NAME).skill(SKILL).latency(LATENCY).build();
     }
 }

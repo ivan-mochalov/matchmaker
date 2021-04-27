@@ -1,7 +1,9 @@
-package com.example.matchmaker.boundary.api;
+package com.example.matchmaker.boundary.api.impl;
 
-import com.example.matchmaker.control.MatchmakerService;
+import com.example.matchmaker.control.service.MatchmakerService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,11 +13,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.example.matchmaker.util.Constants.*;
 import static com.example.matchmaker.util.UserDtoFactory.createInvalidUserDtoString;
 import static com.example.matchmaker.util.UserDtoFactory.createUserDtoString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Execution(ExecutionMode.CONCURRENT)
 @WebMvcTest(controllers = MatchmakerController.class)
 class MatchmakerControllerTest {
 
@@ -52,7 +56,7 @@ class MatchmakerControllerTest {
 
     @Test
     void givenInternalException_whenPerformed_thenErrorMessageReturns() throws Exception {
-        doThrow(TEST_EXCEPTION).when(service).doSmth();
+        doThrow(TEST_EXCEPTION).when(service).accept(any());
 
         controller.perform(post(USERS_URL)
                 .content(createUserDtoString())
