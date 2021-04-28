@@ -37,11 +37,4 @@ class MatchmakerServiceImplTest {
         verify(mapper, only()).from(any(UserDto.class));
         verify(repository, only()).save(any(User.class));
     }
-
-    @Test
-    void givenServiceCalled_whenMatchUsers_thenCalledRepositoryFinAll() {
-        service.matchUsers();
-
-        verify(repository, only()).findAll();
-    }
 }

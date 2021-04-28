@@ -4,6 +4,7 @@ import com.example.matchmaker.boundary.dto.UserDto;
 import com.example.matchmaker.control.mapping.UserMapper;
 import com.example.matchmaker.control.repository.UserRepository;
 import com.example.matchmaker.control.service.MatchmakerService;
+import com.example.matchmaker.control.service.UserGroupFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ public class MatchmakerServiceImpl implements MatchmakerService {
 
     private final UserMapper mapper;
     private final UserRepository repository;
+    private final UserGroupFactory userGroupFactory;
 
     @Value("${group.size:5}")
     private int groupSize;
@@ -23,7 +25,7 @@ public class MatchmakerServiceImpl implements MatchmakerService {
     private int maxDelayInSeconds;
 
     @Override
-    public void accept(UserDto userDto) {
+    public void accept(final UserDto userDto) {
         repository.save(mapper.from(userDto));
     }
 
