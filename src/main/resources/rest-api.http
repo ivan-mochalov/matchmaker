@@ -1,0 +1,218 @@
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userOne",
+  "skill": 10.0,
+  "latency": 50.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userTwo",
+  "skill": 20.0,
+  "latency": 60.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userThree",
+  "skill": 30.0,
+  "latency": 70.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userFour",
+  "skill": 40.0,
+  "latency": 80.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userFive",
+  "skill": 50.0,
+  "latency": 90.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userSix",
+  "skill": 60.0,
+  "latency": 100.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userSeven",
+  "skill": 70.0,
+  "latency": 110.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userEight",
+  "skill": 80.0,
+  "latency": 120.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userNine",
+  "skill": 90.0,
+  "latency": 130.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "userTen",
+  "skill": 100.0,
+  "latency": 140.0
+}
+###
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botOne",
+  "skill": 125.0,
+  "latency": 60.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botTwo",
+  "skill": 115.0,
+  "latency": 70.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botThree",
+  "skill": 105.0,
+  "latency": 80.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botFour",
+  "skill": 95.0,
+  "latency": 90.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botFive",
+  "skill": 85.0,
+  "latency": 100.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botSix",
+  "skill": 75.0,
+  "latency": 110.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botSeven",
+  "skill": 65.0,
+  "latency": 120.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botEight",
+  "skill": 55.0,
+  "latency": 130.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botNine",
+  "skill": 45.0,
+  "latency": 140.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "botTen",
+  "skill": 35.0,
+  "latency": 150.0
+}
+###

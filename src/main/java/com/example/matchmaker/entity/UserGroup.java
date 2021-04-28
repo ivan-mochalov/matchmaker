@@ -27,15 +27,15 @@ public class UserGroup {
     public String toString() {
         return "The group number " + groupNumber +
                 " consists of [" + String.join(",", userNames) +
-                "]\n " +
+                "] " +
                 "skill [min: " + minSkill +
                 "] [max: " + maxSkill +
                 "] [avg: " + avgSkill +
-                "] \n" +
+                "] " +
                 "latency [min: " + minLatency +
                 "] [max: " + maxLatency +
                 "] [avg: " + avgLatency +
-                "] \n" +
+                "] " +
                 "time spent in queue [min: " + minTimeSpentSeconds +
                 "] [max: " + maxTimeSpentSeconds +
                 "] [avg: " + avgTimeSpentSeconds +

@@ -61,10 +61,10 @@ public class UserGroupFactoryImpl implements UserGroupFactory {
     }
 
     private double calculateAvgSkill(List<User> users) {
-        return users.stream()
+        return Math.floor(users.stream()
                 .mapToDouble(User::getSkill)
                 .average()
-                .orElse(DEFAULT_DOUBLE);
+                .orElse(DEFAULT_DOUBLE));
     }
 
     private double calculateMinLatency(List<User> users) {
@@ -82,10 +82,10 @@ public class UserGroupFactoryImpl implements UserGroupFactory {
     }
 
     private double calculateAvgLatency(List<User> users) {
-        return users.stream()
+        return Math.floor(users.stream()
                 .mapToDouble(User::getLatency)
                 .average()
-                .orElse(DEFAULT_DOUBLE);
+                .orElse(DEFAULT_DOUBLE));
     }
 
     private int calculateMinTimeSpentSeconds(List<User> users, OffsetTime now) {
@@ -103,10 +103,10 @@ public class UserGroupFactoryImpl implements UserGroupFactory {
     }
 
     private double calculateAvgTimeSpentSeconds(final List<User> users, OffsetTime now) {
-        return users.stream()
+        return Math.round(users.stream()
                 .mapToLong(u -> Duration.between(u.getAcceptedAt(), now).getSeconds())
                 .average()
-                .orElse(DEFAULT_DOUBLE);
+                .orElse(DEFAULT_DOUBLE));
     }
 
     private List<String> createUserNames(final List<User> users) {

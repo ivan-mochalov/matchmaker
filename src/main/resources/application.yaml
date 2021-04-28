@@ -1,5 +1,5 @@
 logging.level:
   org.springframework.web: ERROR
 
-group.size: 5
+group.size: 3
 max.delay.seconds: 30
