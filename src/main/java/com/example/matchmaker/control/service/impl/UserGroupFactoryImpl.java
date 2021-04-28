@@ -30,6 +30,7 @@ public class UserGroupFactoryImpl implements UserGroupFactory {
     @Override
     public void createGroup(List<User> users) {
         final var now = OffsetTime.now();
+        log.debug("Creating new group");
 
         handler.handleUserGroup(UserGroup.builder()
                 .groupNumber(matchNumber.incrementAndGet())

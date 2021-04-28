@@ -57,6 +57,8 @@ public class MatchmakerServiceImpl implements MatchmakerService {
             }
 
             createGroupFrom(selectedUsers);
+        } else {
+            log.debug("User pool is empty");
         }
     }
 
@@ -68,19 +70,23 @@ public class MatchmakerServiceImpl implements MatchmakerService {
 
     private List<User> selectByMedianValues(final List<User> users, int currentPoolSize) {
         if (currentPoolSize >= groupSize * SKILL_MULTIPLIER) {
+            log.debug("Matching users by median values");
             double latency = getMedianUserBy(Comparator.comparing(User::getLatency), users).getLatency();
             double skill = getMedianUserBy(Comparator.comparing(User::getSkill), users).getSkill();
 
             return selectCandidates(users, latency, skill, currentPoolSize);
         } else {
+            log.debug("Not enough users to perform matching by median values");
             return Collections.emptyList();
         }
     }
 
     private List<User> selectByExpiredUser(final List<User> users, final User user, int currentPoolSize) {
         if (currentPoolSize > groupSize) {
+            log.debug("Matching user by expired one");
             return selectCandidates(users, user.getLatency(), user.getSkill(), currentPoolSize);
         } else {
+            log.debug("Not enough users for creating full group by expired one. Matching existing users.");
             return users;
         }
     }
