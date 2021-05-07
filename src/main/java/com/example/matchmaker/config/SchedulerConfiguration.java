@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SchedulerConfiguration {
 
-    private static final int FIVE_SECONDS_DELAY = 5000;
+    private static final int HALF_SECOND_DELAY = 500;
     private final MatchmakerService service;
 
-    @Scheduled(fixedDelay = FIVE_SECONDS_DELAY)
+    @Scheduled(fixedDelay = HALF_SECOND_DELAY)
     public void matchUsers() {
         log.debug("Scheduler started matching");
         service.matchUsers();

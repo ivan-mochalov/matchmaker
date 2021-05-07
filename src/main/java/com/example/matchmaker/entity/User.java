@@ -1,13 +1,16 @@
 package com.example.matchmaker.entity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.Setter;
 
 import java.time.OffsetTime;
 
-@Value
+@Data
 @Builder
+@Setter(AccessLevel.NONE)
 public class User {
 
     String name;
@@ -18,4 +21,7 @@ public class User {
     @EqualsAndHashCode.Exclude
     @Builder.Default
     OffsetTime acceptedAt = OffsetTime.now();
+    @EqualsAndHashCode.Exclude
+    @Setter
+    int rate;
 }

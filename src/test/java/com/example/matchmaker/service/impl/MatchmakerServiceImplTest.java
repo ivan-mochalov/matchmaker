@@ -28,6 +28,8 @@ class MatchmakerServiceImplTest {
 
     private static final int GROUP_SIZE = 3;
     private static final int MAX_DELAY = 30;
+    private static final int SKILL_RATE_STEP = 3;
+    private static final int LATENCY_RATE_STEP = 10;
 
     @Mock
     private UserMapper mapper;
@@ -42,6 +44,8 @@ class MatchmakerServiceImplTest {
         service = new MatchmakerServiceImpl(mapper, repository, userGroupFactory);
         ReflectionTestUtils.setField(service, "groupSize", GROUP_SIZE);
         ReflectionTestUtils.setField(service, "maxDelayInSeconds", MAX_DELAY);
+        ReflectionTestUtils.setField(service, "skillRateStep", MAX_DELAY);
+        ReflectionTestUtils.setField(service, "latencyRateStep", MAX_DELAY);
     }
 
     @Test
@@ -71,11 +75,7 @@ class MatchmakerServiceImplTest {
         when(repository.deleteBy(any())).thenReturn(createUser());
         doThrow(TEST_EXCEPTION).when(userGroupFactory).createGroup(any());
 
-        try {
-            service.matchUsers();
-        } catch (Exception e) {
-            //expected
-        }
+        service.matchUsers();
 
         verify(repository, times(2)).deleteBy(any());
     }
@@ -89,11 +89,7 @@ class MatchmakerServiceImplTest {
         when(repository.deleteBy(any())).thenReturn(createUser());
         doThrow(TEST_EXCEPTION).when(userGroupFactory).createGroup(any());
 
-        try {
-            service.matchUsers();
-        } catch (Exception e) {
-            //expected
-        }
+        service.matchUsers();
 
         verify(repository, times(1)).deleteBy(ONE);
         verify(repository, times(1)).deleteBy(TWO);
@@ -112,18 +108,14 @@ class MatchmakerServiceImplTest {
         when(repository.deleteBy(any())).thenReturn(createUser());
         doThrow(TEST_EXCEPTION).when(userGroupFactory).createGroup(any());
 
-        try {
-            service.matchUsers();
-        } catch (Exception e) {
-            //expected
-        }
+        service.matchUsers();
 
         verify(repository, times(1)).deleteBy(ONE);
         verify(repository, times(1)).deleteBy(TWO);
         verify(repository, times(1)).deleteBy(THREE);
         verify(repository, times(0)).deleteBy(FOUR);
         verify(repository, times(0)).deleteBy(FIVE);
-        verify(repository, times(0)).deleteBy(SIX);;
+        verify(repository, times(0)).deleteBy(SIX);
     }
 
     @Test
@@ -135,17 +127,13 @@ class MatchmakerServiceImplTest {
         when(repository.deleteBy(any())).thenReturn(createUser());
         doThrow(TEST_EXCEPTION).when(userGroupFactory).createGroup(any());
 
-        try {
-            service.matchUsers();
-        } catch (Exception e) {
-            //expected
-        }
+        service.matchUsers();
 
         verify(repository, times(1)).deleteBy(ONE);
         verify(repository, times(1)).deleteBy(TWO);
         verify(repository, times(1)).deleteBy(THREE);
         verify(repository, times(0)).deleteBy(FOUR);
         verify(repository, times(0)).deleteBy(FIVE);
-        verify(repository, times(0)).deleteBy(SIX);;
+        verify(repository, times(0)).deleteBy(SIX);
     }
 }

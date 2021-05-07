@@ -16,7 +16,9 @@ import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,16 +27,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MatchmakerServiceImpl implements MatchmakerService {
 
-    private static final int LATENCY_MULTIPLIER = 3;
-    private static final int SKILL_MULTIPLIER = 2;
+    public static final int GROUP_SIZE_MULTIPLIER = 2;
 
     private final UserMapper mapper;
     private final UserRepository repository;
     private final UserGroupFactory userGroupFactory;
-    @Value("${group.size:3}")
+
+    @Value("${custom.group.size:5}")
     private int groupSize;
-    @Value("${max.delay.seconds:30}")
+    @Value("${custom.delay.seconds:25}")
     private int maxDelayInSeconds;
+    @Value("${custom.rate.step.skill:5}")
+    private int skillRateStep;
+    @Value("${custom.rate.step.latency:25}")
+    private int latencyRateStep;
 
     @Override
     public void accept(final UserDto userDto) {
@@ -47,16 +53,12 @@ public class MatchmakerServiceImpl implements MatchmakerService {
 
         if (!users.isEmpty()) {
             Optional<User> optionalExpiredUser = findUserWithExpiredDelay(users);
-            int currentPoolSize = users.size();
-            List<User> selectedUsers;
 
             if (optionalExpiredUser.isEmpty()) {
-                selectedUsers = selectByMedianValues(users, currentPoolSize);
+                createGroupFrom(selectByRate(users));
             } else {
-                selectedUsers = selectByExpiredUser(users, optionalExpiredUser.get(), currentPoolSize);
+                createGroupFrom(selectByExpiredUser(users, optionalExpiredUser.get()));
             }
-
-            createGroupFrom(selectedUsers);
         } else {
             log.debug("User pool is empty");
         }
@@ -68,67 +70,49 @@ public class MatchmakerServiceImpl implements MatchmakerService {
                 .findAny();
     }
 
-    private List<User> selectByMedianValues(final List<User> users, int currentPoolSize) {
-        if (currentPoolSize >= groupSize * SKILL_MULTIPLIER) {
-            log.debug("Matching users by median values");
-            double latency = getMedianUserBy(Comparator.comparing(User::getLatency), users).getLatency();
-            double skill = getMedianUserBy(Comparator.comparing(User::getSkill), users).getSkill();
+    private List<User> selectByRate(final List<User> users) {
+        if (users.size() >= groupSize * GROUP_SIZE_MULTIPLIER) {
+            log.debug("Matching users by rate");
+            Map<Integer, List<User>> groupCandidates = new HashMap<>();
 
-            return selectCandidates(users, latency, skill, currentPoolSize);
+            users.forEach(i -> {
+                final List<User> candidate = selectGroup(users, i);
+
+                groupCandidates.putIfAbsent(candidate.stream().mapToInt(User::getRate).sum(), candidate);
+            });
+
+            return groupCandidates.get(Collections.min(groupCandidates.keySet()));
         } else {
-            log.debug("Not enough users to perform matching by median values");
+            log.debug("Not enough users to perform matching by rate");
             return Collections.emptyList();
         }
     }
 
-    private List<User> selectByExpiredUser(final List<User> users, final User user, int currentPoolSize) {
-        if (currentPoolSize > groupSize) {
-            log.debug("Matching user by expired one");
-            return selectCandidates(users, user.getLatency(), user.getSkill(), currentPoolSize);
+    private List<User> selectGroup(List<User> users, User user) {
+        final var latency = user.getLatency();
+        final var skill = user.getSkill();
+
+        users.forEach(u -> u.setRate(calculateRate(u, latency, skill)));
+
+        return users.stream()
+                .sorted(Comparator.comparing(User::getRate).thenComparing(User::getAcceptedAt))
+                .limit(groupSize)
+                .collect(Collectors.toList());
+    }
+
+    public int calculateRate(final User user, double latency, double skill) {
+        return (int) (Math.round(Math.abs(user.getLatency() - latency) / latencyRateStep)
+                + Math.round(Math.abs(user.getSkill() - skill) / skillRateStep));
+    }
+
+    private List<User> selectByExpiredUser(final List<User> users, final User user) {
+        if (users.size() > groupSize) {
+            log.debug("Matching users by expired one");
+            return selectGroup(users, user);
         } else {
             log.debug("Not enough users for creating full group by expired one. Matching existing users.");
             return users;
         }
-    }
-
-    private User getMedianUserBy(final Comparator<User> comparator, final List<User> users) {
-        int size = users.size();
-        List<User> sortedUsers = users.stream().sorted(comparator).collect(Collectors.toList());
-        return size % 2 == 0
-                ? sortedUsers.get(size / 2)
-                : sortedUsers.get(size / 2 + 1);
-    }
-
-    private List<User> selectCandidates(final List<User> users, double latency, double skill, int currentPoolSize) {
-        int skillSubgroupSize = calculateSubGroupSize(SKILL_MULTIPLIER, currentPoolSize);
-        int latencySubgroupSize = calculateSubGroupSize(LATENCY_MULTIPLIER, currentPoolSize);
-
-        return sortBy(createDelayComparator(OffsetTime.now()).reversed(), this.groupSize,
-                sortBy(createSkillComparator(skill), skillSubgroupSize,
-                        sortBy(createLatencyComparator(latency), latencySubgroupSize, users)));
-    }
-
-    private int calculateSubGroupSize(int multiplier, int total) {
-        return Math.min(total / groupSize, multiplier) * groupSize;
-    }
-
-    private Comparator<User> createLatencyComparator(double latency) {
-        return Comparator.comparing(u -> Math.abs(u.getLatency() - latency));
-    }
-
-    private Comparator<User> createSkillComparator(double skill) {
-        return Comparator.comparing(u -> Math.abs(u.getSkill() - skill));
-    }
-
-    private Comparator<User> createDelayComparator(OffsetTime time) {
-        return Comparator.comparing(u -> (Duration.between(u.getAcceptedAt(), time).getSeconds()));
-    }
-
-    private List<User> sortBy(Comparator<User> comparator, int groupSize, List<User> users) {
-        return users.stream()
-                .sorted(comparator)
-                .limit(groupSize)
-                .collect(Collectors.toList());
     }
 
     private void createGroupFrom(List<User> selectedUsers) {
@@ -136,8 +120,6 @@ public class MatchmakerServiceImpl implements MatchmakerService {
             List<User> matchedUsers = new ArrayList<>();
             selectedUsers.forEach(u -> matchedUsers.add(repository.deleteBy(u.getName())));
             userGroupFactory.createGroup(matchedUsers);
-
-            matchUsers();
         }
     }
 }

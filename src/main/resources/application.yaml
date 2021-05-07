@@ -2,5 +2,9 @@ logging.level:
   com.example.matchmaker: INFO
   org.springframework.web: ERROR
 
-group.size: 3
-max.delay.seconds: 30
+custom:
+  group.size: 5
+  delay.seconds: 25
+  rate.step:
+    skill: 5
+    latency: 25
