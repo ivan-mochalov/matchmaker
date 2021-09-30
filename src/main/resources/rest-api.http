@@ -3,7 +3,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userOne",
+  "name": "User1",
   "skill": 10.0,
   "latency": 50.0
 }
@@ -14,7 +14,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userTwo",
+  "name": "User2",
   "skill": 20.0,
   "latency": 60.0
 }
@@ -25,7 +25,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userThree",
+  "name": "User3",
   "skill": 30.0,
   "latency": 70.0
 }
@@ -36,7 +36,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userFour",
+  "name": "User4",
   "skill": 40.0,
   "latency": 80.0
 }
@@ -47,7 +47,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userFive",
+  "name": "User5",
   "skill": 50.0,
   "latency": 90.0
 }
@@ -58,7 +58,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userSix",
+  "name": "User6",
   "skill": 60.0,
   "latency": 100.0
 }
@@ -69,7 +69,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userSeven",
+  "name": "User7",
   "skill": 70.0,
   "latency": 110.0
 }
@@ -80,7 +80,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userEight",
+  "name": "User8",
   "skill": 80.0,
   "latency": 120.0
 }
@@ -91,7 +91,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userNine",
+  "name": "User9",
   "skill": 90.0,
   "latency": 130.0
 }
@@ -102,7 +102,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "userTen",
+  "name": "User10",
   "skill": 100.0,
   "latency": 140.0
 }
@@ -112,8 +112,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botOne",
-  "skill": 125.0,
+  "name": "User11",
+  "skill": 95.0,
   "latency": 60.0
 }
 ###
@@ -123,8 +123,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botTwo",
-  "skill": 115.0,
+  "name": "User12",
+  "skill": 85.0,
   "latency": 70.0
 }
 ###
@@ -134,8 +134,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botThree",
-  "skill": 105.0,
+  "name": "User13",
+  "skill": 75.0,
   "latency": 80.0
 }
 ###
@@ -145,8 +145,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botFour",
-  "skill": 95.0,
+  "name": "User14",
+  "skill": 65.0,
   "latency": 90.0
 }
 ###
@@ -156,8 +156,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botFive",
-  "skill": 85.0,
+  "name": "User15",
+  "skill": 55.0,
   "latency": 100.0
 }
 ###
@@ -167,8 +167,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botSix",
-  "skill": 75.0,
+  "name": "User16",
+  "skill": 45.0,
   "latency": 110.0
 }
 ###
@@ -178,8 +178,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botSeven",
-  "skill": 65.0,
+  "name": "User17",
+  "skill": 35.0,
   "latency": 120.0
 }
 ###
@@ -189,8 +189,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botEight",
-  "skill": 55.0,
+  "name": "User18",
+  "skill": 25.0,
   "latency": 130.0
 }
 ###
@@ -200,8 +200,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botNine",
-  "skill": 45.0,
+  "name": "User19",
+  "skill": 15.0,
   "latency": 140.0
 }
 ###
@@ -211,8 +211,118 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "name": "botTen",
-  "skill": 35.0,
+  "name": "User20",
+  "skill": 5.0,
   "latency": 150.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User21",
+  "skill": 40.0,
+  "latency": 90.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User22",
+  "skill": 43.0,
+  "latency": 93.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User23",
+  "skill": 46.0,
+  "latency": 96.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User24",
+  "skill": 49.0,
+  "latency": 99.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User25",
+  "skill": 52.0,
+  "latency": 102.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User26",
+  "skill": 55.0,
+  "latency": 105.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User27",
+  "skill": 58.0,
+  "latency": 108.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User28",
+  "skill": 61.0,
+  "latency": 111.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User29",
+  "skill": 64.0,
+  "latency": 114.0
+}
+###
+
+POST http://localhost:8080/users
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "User30",
+  "skill": 67.0,
+  "latency": 117.0
 }
 ###

@@ -1,7 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.0-SNAPSHOT'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id 'org.springframework.boot' version '2.5.5'
+    id 'java-library'
 }
 
 group = 'com.example'
@@ -18,22 +17,27 @@ compileJava.inputs.files(processResources)
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
-    maven { url 'https://repo.spring.io/snapshot' }
 }
 
+def springBootVersion = '2.5.5'
+def springdocOpenapiUiVersion = '1.5.10'
+def lombokVersion = '1.18.20'
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: springBootVersion
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: springBootVersion
 
-    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.7'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: springdocOpenapiUiVersion
 
-    implementation 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: springBootVersion
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
 }
 
 test {
